@@ -1,9 +1,16 @@
 #include <Arduino.h>
+#include "etc.h"
+#include <ArduinoJson.h>
 
-void setup() {
-  // put your setup code here, to run once:
+const String baseUrl = "https://jsonplaceholder.typicode.com/";
+
+void setup()
+{
+  Serial.begin(115200);
+  Connect_Wifi();
 }
 
-void loop() {
+void loop()
+{
   // put your main code here, to run repeatedly:
 }
