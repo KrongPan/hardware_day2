@@ -4,22 +4,23 @@
 
 const String baseUrl = "https://jsonplaceholder.typicode.com/";
 
-void GET_comments(String postid ){
+void POST_post(){
+    String json;
     DynamicJsonDocument doc(2048);
-    const String url = baseUrl + "comments?postId=" + postid;
+    doc["userId"] = 1;
+    doc["title"] = "Exceed AHHHHHH";
+    doc["body"] = "THIS IS BODY";
+    serializeJson(doc,json);
+
+    const String url = baseUrl + "posts";
     HTTPClient http;
     http.begin(url);
-    int httpResponseCode = http.GET();
+    http.addHeader("Content-Type","application/json");
 
+    int httpResponseCode = http.POST(json);
     if (httpResponseCode >= 200 && httpResponseCode < 300) {
         Serial.print("HTTP ");
         Serial.println(httpResponseCode);
-        String payload = http.getString();
-        deserializeJson(doc,payload);
-
-        Serial.println();
-        Serial.println((const char*)doc[1]["email"]);
-        Serial.println((const char*)doc[1]["body"]);
     }
     else {
         Serial.print("Error code: ");
@@ -31,7 +32,7 @@ void setup()
 {
   Serial.begin(115200);
   Connect_Wifi();
-  GET_comments("1");
+  POST_post();
 }
 
 void loop()
